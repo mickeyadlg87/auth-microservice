@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: auth
+  profiles:
+      active: ${TSENV}
+  cloud:
+    config:
+      uri: http://10.11.121.13:8888
+      enabled: false

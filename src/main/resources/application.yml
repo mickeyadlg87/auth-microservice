@@ -1,0 +1,200 @@
+#set active profile for dev properties
+spring:
+  profiles:
+      active: ${TSENV}
+
+server:
+  port: 48200
+  tomcat:
+        compression: on
+        compressableMimeTypes: application/json,application/xml
+
+hystrix: 
+  threadpool:
+    default:
+      maxQueueSize: 50
+      queueSizeRejectionThreshold: 50
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 170000
+ribbon:
+  MaxAutoRetries: 2
+  # Max number of next servers to retry (excluding the first server)
+  MaxAutoRetriesNextServer: 2        
+  OkToRetryOnAllOperations: true
+  ServerListRefreshInterval: 2000
+  ConnectTimeout: 6000
+  ReadTimeout: 6000
+
+---
+#FOR DEVELOPMENT
+
+spring:
+    profiles: LOCAL
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://definite-boats.maas.reddsystem.com:40000/eureka/
+  instance:
+    preferIpAddress: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+  
+auth: 
+  database: 
+    collection: 
+      authentication: auth_microservice
+      profile: profile_microservice
+      funcionality: funcionality_microservice
+    db: gps
+    url: "mongodb://gracious-neck.maas.reddsystem.com:27017"
+  gmail:
+    port: 993
+    server: "imap.gmail.com"
+    domain: "redd.cl"
+
+---
+#FOR DEVELOPMENT
+
+spring:
+    profiles: DESA
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://definite-boats.maas.reddsystem.com:40000/eureka/
+  instance:
+    preferIpAddress: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+  
+auth: 
+  database: 
+    collection: 
+      authentication: auth_microservice
+      profile: profile_microservice
+      funcionality: funcionality_microservice
+    db: gps
+    url: "mongodb://gracious-neck.maas.reddsystem.com:27017"
+  gmail:
+    port: 993
+    server: "imap.gmail.com"
+    domain: "redd.cl"
+    
+---
+#FOR DEVELOPMENT
+
+spring:
+    profiles: AWS-QA
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://microservicios01.qa.reddsystem.com:40000/eureka/, http://microservicios02.qa.reddsystem.com:40000/eureka/
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+    preferIpAddress: true
+  
+auth: 
+  database: 
+    collection: 
+      authentication: auth_microservice
+      profile: profile_microservice
+      funcionality: funcionality_microservice
+    db: gps
+    url: "mongodb://laststate01.qa.reddsystem.com"
+  gmail:
+    port: 993
+    server: "imap.gmail.com"
+    domain: "redd.cl"
+
+---
+#FOR DEVELOPMENT
+
+spring:
+    profiles: QA
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://microservicios01.qa.reddsystem.com:40000/eureka/, http://microservicios02.qa.reddsystem.com:40000/eureka/
+  instance:
+    preferIpAddress: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+
+auth:
+  database:
+    collection:
+      authentication: auth_microservice
+      profile: profile_microservice
+      funcionality: funcionality_microservice
+    db: gps
+    url: "mongodb://laststate01.qa.reddsystem.com"
+  gmail:
+    port: 993
+    server: "imap.gmail.com"
+    domain: "redd.cl"
+
+
+---
+#FOR PRODUCCTION
+
+spring:
+    profiles: PROD
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.11.121.12:40000/eureka/, http://10.11.121.14:40000/eureka/
+  instance:
+    preferIpAddress: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+  
+auth: 
+  database: 
+    collection: 
+      authentication: auth_microservice
+      profile: profile_microservice
+      funcionality: funcionality_microservice
+    db: gps
+    url: "mongodb://prodbigdata.gps.cl:27017"
+  gmail:
+    port: 993
+    server: "imap.gmail.com"
+    domain: "redd.cl"
+
+---
+#FOR PRODUCCTION
+
+spring:
+    profiles: AWS-PROD
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://microservicios01.prod.reddsystem.com:40000/eureka/,  http://microservicios02.prod.reddsystem.com:40000/eureka/
+  instance:
+    preferIpAddress: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+  
+auth: 
+  database: 
+    collection: 
+      authentication: auth_microservice
+      profile: profile_microservice
+      funcionality: funcionality_microservice
+    db: gps
+    url: "mongodb://laststate01.prod.reddsystem.com:27017,laststate02.prod.reddsystem.com:27017/?replicaSet=laststate"
+  gmail:
+    port: 993
+    server: "imap.gmail.com"
+    domain: "redd.cl"
+    
